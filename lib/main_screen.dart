@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:resep_mama/detail.dart';
+import 'package:resep_mama/model/resep_item.dart';
 import 'package:resep_mama/resep_chinese_food.dart';
 import 'package:resep_mama/resep_lokal.dart';
 import 'package:resep_mama/resep_populer.dart';
@@ -65,70 +67,143 @@ class MainScreen extends StatelessWidget {
                           borderSide: BorderSide(color: Colors.white),
                           borderRadius: BorderRadius.circular(15))),
                 )),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Color(0xffFFE8C5),
-                    borderRadius: BorderRadius.circular(10)
-                  ),
-                  margin: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Image.asset('image/image1.png', width: 93, height: 92,),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Padding(
-                            padding: const EdgeInsets.all(11.0),
-                            child: Text('Hey, kamu punya 12 resep yang belum kamu coba..', style: TextStyle(fontSize: 13, fontFamily: 'Poppins', fontWeight: FontWeight.w700, color: Color(0xff263238))),
-                          ))
-                      ],
+            Container(
+              decoration: BoxDecoration(
+                  color: Color(0xffFFE8C5),
+                  borderRadius: BorderRadius.circular(10)),
+              margin: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Image.asset(
+                        'image/image1.png',
+                        width: 93,
+                        height: 92,
+                      ),
                     ),
-                  ),
+                    Expanded(
+                        flex: 2,
+                        child: Padding(
+                          padding: const EdgeInsets.all(11.0),
+                          child: Text(
+                              'Hey, kamu punya 12 resep yang belum kamu coba..',
+                              style: TextStyle(
+                                  fontSize: 13,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w700,
+                                  color: Color(0xff263238))),
+                        ))
+                  ],
                 ),
-                DefaultTabController(
-                  length: 5, 
-                  child: Column(
+              ),
+            ),
+            DefaultTabController(
+                length: 5,
+                child: Column(
                   children: [
                     Container(
-                      margin: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                       child: TabBar(
-                        indicator: BoxDecoration(
-                          color: Color(0xffFFE8C5),
-                          borderRadius: BorderRadius.circular(10)
-                        ),
-                        labelPadding: EdgeInsets.all(10),
-                        labelColor: Color(0xff263238),
-                        unselectedLabelColor: Colors.white,
-                        isScrollable: true,
-                        tabs: [
-                        Text('Resep Popular', style: TextStyle(fontSize: 12, fontFamily: 'Poppins', fontWeight: FontWeight.w600),),
-                        Text('Lokal', style: TextStyle(fontSize: 12, fontFamily: 'Poppins', fontWeight: FontWeight.w600)),
-                        Text('Western', style: TextStyle(fontSize: 12, fontFamily: 'Poppins', fontWeight: FontWeight.w600)),
-                        Text('Sarapan Populer', style: TextStyle(fontSize: 12, fontFamily: 'Poppins', fontWeight: FontWeight.w600)),
-                        Text('Chinese Food', style: TextStyle(fontSize: 12, fontFamily: 'Poppins', fontWeight: FontWeight.w600))
-                      ]),
+                          indicator: BoxDecoration(
+                              color: Color(0xffFFE8C5),
+                              borderRadius: BorderRadius.circular(10)),
+                          labelPadding: EdgeInsets.all(10),
+                          labelColor: Color(0xff263238),
+                          unselectedLabelColor: Colors.white,
+                          isScrollable: true,
+                          tabs: [
+                            Text(
+                              'Resep Popular',
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            Text('Lokal',
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w600)),
+                            Text('Western',
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w600)),
+                            Text('Sarapan Populer',
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w600)),
+                            Text('Chinese Food',
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w600))
+                          ]),
                     ),
                     Container(
                       height: 350,
                       margin: EdgeInsets.symmetric(vertical: 16),
-                      child: TabBarView(
-                        children: [
-                          ResepPopuler(),
-                          ResepLokal(),
-                          ResepWestern(),
-                          ResepSarapanPilihan(),
-                          ResepChineseFood()
-                      ]
-                      ),
-                      )
+                      child: TabBarView(children: [
+                        ResepPopuler(),
+                        ResepLokal(),
+                        ResepWestern(),
+                        ResepSarapanPilihan(),
+                        ResepChineseFood()
+                      ]),
+                    )
                   ],
-                  ))
+                ))
           ],
         )),
       ),
+    );
+  }
+}
+
+class WebScreen extends StatelessWidget {
+  final int gridCount;
+
+  WebScreen({required this.gridCount});
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.count(
+      crossAxisCount: gridCount,
+      crossAxisSpacing: 16,
+      mainAxisSpacing: 16,
+      children: ListItemResepPopuler.map((resep) {
+        return InkWell(
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return DetailCarousel(resep: resep);
+            }));
+          },
+          child: Container(
+            child: Column(
+              children: [
+                Expanded(
+                  child: Image.asset(
+                    resep.gambar,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Text(resep.nama),
+                Row(
+                  children: [
+                    Icon(Icons.thumb_up),
+                    SizedBox(width: 8),
+                    Text(resep.rate)
+                  ],
+                )
+              ],
+            ),
+          ),
+        );
+      }).toList(),
     );
   }
 }

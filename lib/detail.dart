@@ -24,7 +24,7 @@ class DetailCarousel extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(26.0),
                     child: Card(
-                      color: Color(0xffFFE8C5),
+                        color: Color(0xffFFE8C5),
                         child: IconButton(
                             onPressed: () {
                               Navigator.pop(context);
@@ -32,21 +32,21 @@ class DetailCarousel extends StatelessWidget {
                             icon: Icon(Icons.arrow_back_ios_new))),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 32),
                     child: Row(
                       children: [
                         CircleAvatar(
-                          backgroundColor: Colors.grey,
+                          backgroundColor: Color(0xffFFE8C5),
                           maxRadius: 4,
                         ),
                         SizedBox(width: 5),
                         CircleAvatar(
-                          backgroundColor: Colors.grey,
+                          backgroundColor: Color(0xffFFE8C5),
                           maxRadius: 4,
                         ),
                         SizedBox(width: 5),
                         CircleAvatar(
-                          backgroundColor: Colors.grey,
+                          backgroundColor: Color(0xffFFE8C5),
                           maxRadius: 4,
                         ),
                       ],
@@ -117,8 +117,12 @@ class DetailCarousel extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.all(24.0),
-                child: Card(
-                  color: Color(0xffFFE8C5),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color(0xffFFE8C5),
+                  ),
+
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -166,19 +170,18 @@ class DetailCarousel extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: 24),
-                      child: OutlinedButton(
-                          onPressed: () {},
-                          child: Container(
-                            child: Text('Follow'),
-                          )),
+                      child: FollowButton()
                     )
                   ],
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(24),
-                child: Card(
-                  color: Color(0xffFFE8C5),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color(0xffFFE8C5),
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -226,7 +229,7 @@ class DetailCarousel extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(32),
+                padding: const EdgeInsets.only(bottom: 32, left: 32, right: 32),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -270,6 +273,68 @@ class DetailCarousel extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class FollowButton extends StatefulWidget {
+  const FollowButton({Key? key}) : super(key: key);
+
+  @override
+  State<FollowButton> createState() => _FollowButtonState();
+}
+
+class _FollowButtonState extends State<FollowButton> {
+  bool isOn = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      child: !isOn
+          ? Container(
+              width: 100,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Color(0xffFFE8C5), width: 1)),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Text(
+                    'Follow',
+                    style: TextStyle(
+                        color: Color(0xffFFE8C5),
+                        fontFamily: "Poppins",
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ),
+            )
+          : Container(
+              width: 100,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: Color(0xffFFE8C5), width: 1),
+                  color: Color(0xffFFE8C5)),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Text(
+                    'Unfollow',
+                    style: TextStyle(
+                        color: Color(0xff263238),
+                        fontFamily: "Poppins",
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ),
+            ),
+      onTap: () {
+        setState(() {
+          isOn = !isOn;
+        });
+      },
     );
   }
 }

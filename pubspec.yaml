@@ -79,6 +79,7 @@ flutter:
     - image/16.jpeg
     - image/17.jpeg
     - image/18.jpeg
+    - image/udon.png
 
   fonts:
     - family: Poppins
